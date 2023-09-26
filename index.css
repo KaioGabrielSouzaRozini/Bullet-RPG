@@ -18,18 +18,11 @@
   font-size: 40px;
   padding-left: 50px;
 }
-.weapon {
+.playerStatus {
   color: white;
   font-size: 40px;
 }
-.ammo {
-  color: white;
-  font-size: 40px;
-}
-.lifes {
-  color: white;
-  font-size: 40px;
-}
+
 .status {
   display: flex;
   flex-direction: column;

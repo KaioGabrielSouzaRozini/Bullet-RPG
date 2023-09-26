@@ -10,15 +10,19 @@
     <canvas class="canvas" id="space" width="900" height="600"></canvas>
     <div class="all">
       <div class="status" id="status">
-        <p class="weapon" id="weapon"></p>
-        <p class="ammo" id="ammo"></p>
+        <p class="playerStatus" id="weapon"></p>
+        <p class="playerStatus" id="ammo"></p>
       </div>
       <div class="status" id="status">
-        <p class="lifes">Lifes</p>
-        <p class="lifes" id="lifes">3</p>
+        <p class="playerStatus">Lifes</p>
+        <p class="playerStatus" id="lifes">3</p>
+      </div>
+      <div class="status" id="status">
+        <p class="playerStatus">level</p>
+        <p class="playerStatus" id="level">1</p>
       </div>
       <h1 class="gameover" id="gameover"></h1>
     </div>
-    <script src="index.js"></script>
+    <script src="index.js" type="module" defer></script>
   </body>
 </html>
