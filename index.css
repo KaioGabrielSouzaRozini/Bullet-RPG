@@ -1,0 +1,26 @@
+* {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+}
+
+.canvas {
+  margin: 50px;
+  border: 6px solid white;
+}
+
+.gameover {
+  color: white;
+  font-size: 40px;
+  padding-left: 50px;
+}
+.weapon {
+  color: white;
+  font-size: 40px;
+  padding-left: 50px;
+}
+.ammo {
+  color: white;
+  font-size: 40px;
+  padding-left: 50px;
+}
