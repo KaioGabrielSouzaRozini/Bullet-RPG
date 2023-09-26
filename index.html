@@ -4,15 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="index.css" />
-    <title>Document</title>
+    <title>Bullet RPG</title>
   </head>
   <body>
     <canvas class="canvas" id="space" width="900" height="600"></canvas>
-    <div class="status" id="status">
-      <p class="weapon" id="weapon"></p>
-      <p class="ammo" id="ammo"></p>
+    <div class="all">
+      <div class="status" id="status">
+        <p class="weapon" id="weapon"></p>
+        <p class="ammo" id="ammo"></p>
+      </div>
+      <div class="status" id="status">
+        <p class="lifes">Lifes</p>
+        <p class="lifes" id="lifes">3</p>
+      </div>
+      <h1 class="gameover" id="gameover"></h1>
     </div>
-    <h1 class="gameover" id="gameover"></h1>
     <script src="index.js"></script>
   </body>
 </html>

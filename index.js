@@ -3,6 +3,7 @@ const pincel = canvas.getContext("2d");
 let gameOver = document.getElementById("gameover");
 let playerGun = document.getElementById("weapon");
 let playerAmmo = document.getElementById("ammo");
+let playerLifes = document.getElementById("lifes");
 
 document.body.addEventListener("keydown", (key) => {
   drive(key);
@@ -22,7 +23,8 @@ class Player {
       (this.recharge = false),
       (this.rechargeTime = 800),
       this.weapon,
-      (this.shoots = []);
+      (this.shoots = []),
+      (this.lifes = 3);
   }
 }
 
@@ -37,8 +39,9 @@ class Enemy {
 }
 
 class Gun {
-  constructor(name, x, y, ammo) {
-    (this.name = name),
+  constructor(index, name, x, y, ammo) {
+    (this.index = index),
+      (this.name = name),
       (this.x = x),
       (this.y = y),
       (this.size = 30),
@@ -47,10 +50,11 @@ class Gun {
 }
 let enemys = [];
 let player = new Player(0, 0, 30);
-let guns = [new Gun("pistol", 60, 120, 6)];
+let guns = [new Gun(0, "pistol", 60, 120, 6)];
 let gameD = new Game(3);
 let centralize = 15;
 let moves = 3;
+let gunIndex = 0;
 
 function drive(key) {
   switch (key.key) {
@@ -79,51 +83,32 @@ function drive(key) {
       }
       break;
     case "a":
-      if (gameD.turn == true && player.recharge == true) {
-        player.shoots.push({ x: player.x, y: player.y, direction: 0 });
-        gameD.moves -= 1;
-        player.weapon.shoot -= 1;
-        playerAmmo.innerText = player.weapon.shoot;
-        if (player.weapon.shoot == 0) {
-          player.recharge = false;
-        }
-      }
+      launch(0);
       break;
     case "d":
-      if (gameD.turn == true && player.recharge == true) {
-        player.shoots.push({ x: player.x, y: player.y, direction: 1 });
-        gameD.moves -= 1;
-        player.weapon.shoot -= 1;
-        playerAmmo.innerText = player.weapon.shoot;
-        if (player.weapon.shoot == 0) {
-          player.recharge = false;
-        }
-      }
+      launch(1);
       break;
     case "w":
-      if (gameD.turn == true && player.recharge == true) {
-        player.shoots.push({ x: player.x, y: player.y, direction: 2 });
-        gameD.moves -= 1;
-        player.weapon.shoot -= 1;
-        playerAmmo.innerText = player.weapon.shoot;
-        if (player.weapon.shoot == 0) {
-          player.recharge = false;
-        }
-      }
+      launch(2);
       break;
     case "s":
-      if (gameD.turn == true && player.recharge == true) {
-        player.shoots.push({ x: player.x, y: player.y, direction: 3 });
-        gameD.moves -= 1;
-        player.weapon.shoot -= 1;
-        playerAmmo.innerText = player.weapon.shoot;
-        if (player.weapon.shoot == 0) {
-          player.recharge = false;
-        }
-      }
+      launch(3);
       break;
   }
 }
+
+function launch(direction) {
+  if (gameD.turn == true && player.recharge == true) {
+    player.shoots.push({ x: player.x, y: player.y, direction: direction });
+    gameD.moves -= 1;
+    player.weapon.shoot -= 1;
+    playerAmmo.innerText = player.weapon.shoot;
+    if (player.weapon.shoot == 0) {
+      player.recharge = false;
+    }
+  }
+}
+
 function turno() {
   if (gameD.turn) {
     gameD.turn = false;
@@ -161,13 +146,15 @@ function enemyTurn() {
   }
   let gunProb = Math.round(Math.random() * 4);
   if (gunProb == 3) {
+    gunIndex += 1;
     let = gunX = Math.round(Math.random() * 10) * 60;
     let = gunY = Math.round(Math.random() * 10) * 60;
-    guns.push(new Gun("pistol", gunX, gunY, 6));
+    guns.push(new Gun(gunIndex, "pistol", gunX, gunY, 6));
   } else if (gunProb == 4) {
+    gunIndex += 1;
     let = gunX = Math.round(Math.random() * 10) * 60;
     let = gunY = Math.round(Math.random() * 10) * 60;
-    guns.push(new Gun("machinegun", gunX, gunY, 12));
+    guns.push(new Gun(gunIndex, "machinegun", gunX, gunY, 12));
   }
 
   gameD.moves = 0;
@@ -260,8 +247,11 @@ function update() {
 
   for (var i = 0; i < enemys.length; i++) {
     if (enemys[i].x == player.x && enemys[i].y == player.y) {
-      gameOver.innerText = "Game Over";
-      clearInterval(interval);
+      console.log(enemys[i]);
+      let index = enemys.indexOf(enemys[i]);
+      enemys.splice(index, 1);
+      player.lifes -= 1;
+      playerLifes.innerText = player.lifes;
     }
   }
   for (var i = 0; i < guns.length; i++) {
@@ -271,10 +261,15 @@ function update() {
         playerAmmo.innerText = j.ammo;
         player.weapon = { shoot: j.ammo };
         player.recharge = true;
+        console.log(j);
         let index = guns.indexOf(j);
         guns.splice(index, 1);
       });
     }
+  }
+  if (player.lifes == 0) {
+    gameOver.innerText = "Game Over";
+    clearInterval(interval);
   }
 }
 
