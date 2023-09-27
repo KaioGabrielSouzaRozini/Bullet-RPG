@@ -19,7 +19,84 @@ export let level = 1;
 
 export function launch(direction) {
   if (gameD.turn == true && player.recharge == true) {
-    player.shoots.push({ x: player.x, y: player.y, direction: direction });
+    if (playerGun.innerText == "shotgun") {
+      switch (direction) {
+        case 0:
+          player.shoots.push({
+            x: player.x,
+            y: player.y,
+            direction: direction,
+          });
+          player.shoots.push({
+            x: player.x,
+            y: player.y + 60,
+            direction: direction,
+          });
+          player.shoots.push({
+            x: player.x,
+            y: player.y - 60,
+            direction: direction,
+          });
+          break;
+        case 1:
+          player.shoots.push({
+            x: player.x,
+            y: player.y + 60,
+            direction: direction,
+          });
+          player.shoots.push({
+            x: player.x,
+            y: player.y - 60,
+            direction: direction,
+          });
+          player.shoots.push({
+            x: player.x,
+            y: player.y,
+            direction: direction,
+          });
+          break;
+        case 2:
+          player.shoots.push({
+            x: player.x,
+            y: player.y,
+            direction: direction,
+          });
+          player.shoots.push({
+            x: player.x + 60,
+            y: player.y,
+            direction: direction,
+          });
+          player.shoots.push({
+            x: player.x - 60,
+            y: player.y,
+            direction: direction,
+          });
+          break;
+        case 3:
+          player.shoots.push({
+            x: player.x,
+            y: player.y,
+            direction: direction,
+          });
+          player.shoots.push({
+            x: player.x + 60,
+            y: player.y,
+            direction: direction,
+          });
+          player.shoots.push({
+            x: player.x - 60,
+            y: player.y,
+            direction: direction,
+          });
+          break;
+      }
+    } else if (playerGun.innerText == "sniper") {
+      player.shoots.push({ x: player.x, y: player.y, direction: direction });
+      player.shoots.push({ x: player.x, y: player.y, direction: direction });
+      player.shoots.push({ x: player.x, y: player.y, direction: direction });
+    } else {
+      player.shoots.push({ x: player.x, y: player.y, direction: direction });
+    }
     gameD.moves -= 1;
     player.weapon.shoot -= 1;
     playerAmmo.innerText = player.weapon.shoot;
@@ -64,11 +141,15 @@ export function enemyTurn() {
       spawnMonster();
     }
   }
-  let gunProb = Math.round(Math.random() * 3);
+  let gunProb = Math.round(Math.random() * 6);
   if (gunProb == 3) {
     spawnGun("pistol", 6);
   } else if (gunProb == 2) {
     spawnGun("machinegun", 12);
+  } else if (gunProb == 4) {
+    spawnGun("shotgun", 6);
+  } else if (gunProb == 5) {
+    spawnGun("sniper", 8);
   }
   level += 1;
   playerLevel.innerText = level;
@@ -148,7 +229,8 @@ export function hitShot() {
   player.shoots.forEach((v) => {
     enemys.forEach((j) => {
       if (v.y == j.y && v.x >= j.x - 20 && v.x <= j.x + 60) {
-        player.shoots.shift();
+        let indexShoot = player.shoots.indexOf(v);
+        player.shoots.splice(indexShoot, 1);
         let index = enemys.indexOf(j);
         enemys.splice(index, 1);
       }
@@ -196,6 +278,20 @@ export function drawGuns() {
           guns[i].y + centralize,
           guns[i].size,
           "green"
+        );
+      } else if (guns[i].name == "shotgun") {
+        drawReact(
+          guns[i].x + centralize,
+          guns[i].y + centralize,
+          guns[i].size,
+          "orange"
+        );
+      } else if (guns[i].name == "sniper") {
+        drawReact(
+          guns[i].x + centralize,
+          guns[i].y + centralize,
+          guns[i].size,
+          "pink"
         );
       }
     }
