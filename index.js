@@ -49,7 +49,7 @@ function drive(key) {
       }
       break;
     case "ArrowDown":
-      if (player.y < 840 && gameD.turn == true) {
+      if (player.y < 540 && gameD.turn == true) {
         player.y += 60;
         gameD.moves -= 1;
       }

@@ -156,26 +156,14 @@ export function enemyTurn() {
   gameD.moves = 0;
 }
 
-export function spawnGun(gunName, ammo) {
-  gunIndex += 1;
-  let gunX = Math.round(Math.random() * 10) * 60;
-  let gunY = Math.round(Math.random() * 10) * 60;
-
-  if (guns.length > 0) {
-    for (var i = 0; i < guns.length; i++) {
-      if (guns[i].x == gunX && guns[i].y == gunY) {
-      } else {
-        guns.push(new Gun(gunIndex, gunName, gunX, gunY, ammo));
-      }
-    }
-  } else {
-    guns.push(new Gun(gunIndex, gunName, gunX, gunY, ammo));
-  }
-}
-
 export function spawnMonster() {
   let monsterX = Math.round(Math.random() * 15) * 60;
   let monsterY = Math.round(Math.random() * 10) * 60;
+
+  if (Number.isInteger(level / 10)) {
+    console.log("boss level");
+    enemys.push({ x: monsterX, y: monsterY, size: 30, lifes: 3 });
+  }
 
   if (
     (player.x == monsterX && player.y == monsterY) ||
@@ -225,14 +213,39 @@ export function monstersMoves() {
   }
 }
 
+export function spawnGun(gunName, ammo) {
+  gunIndex += 1;
+  let gunX = Math.round(Math.random() * 10) * 60;
+  let gunY = Math.round(Math.random() * 10) * 60;
+
+  if (guns.length > 0) {
+    for (var i = 0; i < guns.length; i++) {
+      if (guns[i].x == gunX && guns[i].y == gunY) {
+      } else {
+        guns.push(new Gun(gunIndex, gunName, gunX, gunY, ammo));
+      }
+    }
+  } else {
+    guns.push(new Gun(gunIndex, gunName, gunX, gunY, ammo));
+  }
+}
+
 export function hitShot() {
   player.shoots.forEach((v) => {
     enemys.forEach((j) => {
       if (v.y == j.y && v.x >= j.x - 20 && v.x <= j.x + 60) {
         let indexShoot = player.shoots.indexOf(v);
         player.shoots.splice(indexShoot, 1);
-        let index = enemys.indexOf(j);
-        enemys.splice(index, 1);
+        if (j.lifes) {
+          j.lifes -= 1;
+          if (j.lifes <= 0) {
+            let index = enemys.indexOf(j);
+            enemys.splice(index, 1);
+          }
+        } else {
+          let index = enemys.indexOf(j);
+          enemys.splice(index, 1);
+        }
       }
     });
   });
@@ -300,12 +313,21 @@ export function drawGuns() {
 
 export function drawEnemys() {
   for (var i = 0; i < enemys.length; i++) {
-    drawReact(
-      enemys[i].x + centralize,
-      enemys[i].y + centralize,
-      enemys[i].size,
-      "blue"
-    );
+    if (enemys[i].lifes) {
+      drawReact(
+        enemys[i].x + centralize,
+        enemys[i].y + centralize,
+        enemys[i].size,
+        "black"
+      );
+    } else {
+      drawReact(
+        enemys[i].x + centralize,
+        enemys[i].y + centralize,
+        enemys[i].size,
+        "blue"
+      );
+    }
   }
 }
 
