@@ -8,6 +8,11 @@
   display: flex;
   justify-content: space-around;
 }
+.all-canvas {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 .canvas {
   margin: 50px;
   border: 6px solid white;

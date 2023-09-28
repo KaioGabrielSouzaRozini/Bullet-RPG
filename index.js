@@ -1,13 +1,13 @@
 import { Player, Game, Gun } from "./class.js";
 import {
   launch,
-  turn,
   hitShot,
   hitEnemy,
   takeGun,
   drawBullets,
   drawEnemys,
   drawGuns,
+  enemyTurn,
 } from "./functions.js";
 
 const canvas = document.getElementById("space");
@@ -27,6 +27,7 @@ export let moves = 3;
 export let gunIndex = 0;
 export let level = 1;
 let interval;
+let intervalEnemy;
 
 function drive(key) {
   switch (key.key) {
@@ -34,11 +35,17 @@ function drive(key) {
       if (player.x < 840 && gameD.turn == true) {
         player.x += 60;
         gameD.moves -= 1;
+      } else if (player.x == 840) {
+        player.x = 0;
+        gameD.moves -= 1;
       }
       break;
     case "ArrowLeft":
       if (player.x > 40 && gameD.turn == true) {
         player.x -= 60;
+        gameD.moves -= 1;
+      } else if (player.x == 0) {
+        player.x = 840;
         gameD.moves -= 1;
       }
       break;
@@ -46,11 +53,17 @@ function drive(key) {
       if (player.y > 40 && gameD.turn == true) {
         player.y -= 60;
         gameD.moves -= 1;
+      } else if (player.y == 0) {
+        player.y = 540;
+        gameD.moves -= 1;
       }
       break;
     case "ArrowDown":
       if (player.y < 540 && gameD.turn == true) {
         player.y += 60;
+        gameD.moves -= 1;
+      } else if (player.y == 540) {
+        player.y = 0;
         gameD.moves -= 1;
       }
       break;
@@ -91,12 +104,11 @@ function update() {
   hitShot();
   hitEnemy();
   takeGun();
-  if (gameD.moves == 0) {
-    turn();
-  }
+
   if (player.lifes <= 0) {
     gameOver.innerText = "Game Over";
     clearInterval(interval);
+    clearInterval(intervalEnemy);
   }
 }
 
@@ -113,5 +125,6 @@ function game() {
 
 function gameLoop() {
   interval = setInterval(game, 1000 / 30);
+  intervalEnemy = setInterval(enemyTurn, 1500);
 }
 gameLoop();

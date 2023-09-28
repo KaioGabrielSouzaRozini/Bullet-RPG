@@ -106,17 +106,6 @@ export function launch(direction) {
   }
 }
 
-export function turn() {
-  if (gameD.turn) {
-    gameD.turn = false;
-    enemyTurn();
-  } else {
-    gameD.moves += moves;
-    setTimeout(() => {
-      gameD.turn = true;
-    }, 1000);
-  }
-}
 export function enemyTurn() {
   gameD.moves = 3;
   for (var i = 0; i < gameD.moves; i++) {
@@ -138,7 +127,9 @@ export function enemyTurn() {
         }
       }
     } else {
-      spawnMonster();
+      setTimeout(() => {
+        spawnMonster();
+      }, 500);
     }
   }
   let gunProb = Math.round(Math.random() * 6);
@@ -151,6 +142,7 @@ export function enemyTurn() {
   } else if (gunProb == 5) {
     spawnGun("sniper", 8);
   }
+
   level += 1;
   playerLevel.innerText = level;
   gameD.moves = 0;
@@ -252,83 +244,51 @@ export function hitShot() {
 }
 
 export function hitEnemy() {
-  for (var i = 0; i < enemys.length; i++) {
-    if (enemys[i].x == player.x && enemys[i].y == player.y) {
-      let index = enemys.indexOf(enemys[i]);
+  enemys.forEach((v) => {
+    if (v.x == player.x && v.y == player.y) {
+      let index = enemys.indexOf(v);
       enemys.splice(index, 1);
       player.lifes -= 1;
       playerLifes.innerText = player.lifes;
     }
-  }
+  });
 }
 export function takeGun() {
-  for (var i = 0; i < guns.length; i++) {
-    if (guns[i].x == player.x && guns[i].y == player.y) {
-      guns.forEach((j) => {
-        playerGun.innerText = j.name;
-        playerAmmo.innerText = j.ammo;
-        player.weapon = { shoot: j.ammo };
-        player.recharge = true;
-        let index = guns.indexOf(j);
-        guns.splice(index, 1);
-      });
+  guns.forEach((j) => {
+    if (j.x == player.x && j.y == player.y) {
+      playerGun.innerText = j.name;
+      playerAmmo.innerText = j.ammo;
+      player.weapon = { shoot: j.ammo };
+      player.recharge = true;
+      let index = guns.indexOf(j);
+      guns.splice(index, 1);
     }
-  }
+  });
 }
 export function drawGuns() {
   if (guns.length > 0) {
-    for (var i = 0; i < guns.length; i++) {
-      if (guns[i].name == "pistol") {
-        drawReact(
-          guns[i].x + centralize,
-          guns[i].y + centralize,
-          guns[i].size,
-          "purple"
-        );
-      } else if (guns[i].name == "machinegun") {
-        drawReact(
-          guns[i].x + centralize,
-          guns[i].y + centralize,
-          guns[i].size,
-          "green"
-        );
-      } else if (guns[i].name == "shotgun") {
-        drawReact(
-          guns[i].x + centralize,
-          guns[i].y + centralize,
-          guns[i].size,
-          "orange"
-        );
-      } else if (guns[i].name == "sniper") {
-        drawReact(
-          guns[i].x + centralize,
-          guns[i].y + centralize,
-          guns[i].size,
-          "pink"
-        );
+    guns.forEach((v) => {
+      if (v.name == "pistol") {
+        drawReact(v.x + centralize, v.y + centralize, v.size, "purple");
+      } else if (v.name == "machinegun") {
+        drawReact(v.x + centralize, v.y + centralize, v.size, "green");
+      } else if (v.name == "shotgun") {
+        drawReact(v.x + centralize, v.y + centralize, v.size, "orange");
+      } else if (v.name == "sniper") {
+        drawReact(v.x + centralize, v.y + centralize, v.size, "pink");
       }
-    }
+    });
   }
 }
 
 export function drawEnemys() {
-  for (var i = 0; i < enemys.length; i++) {
-    if (enemys[i].lifes) {
-      drawReact(
-        enemys[i].x + centralize,
-        enemys[i].y + centralize,
-        enemys[i].size,
-        "black"
-      );
+  enemys.forEach((v) => {
+    if (v.lifes) {
+      drawReact(v.x + centralize, v.y + centralize, v.size, "black");
     } else {
-      drawReact(
-        enemys[i].x + centralize,
-        enemys[i].y + centralize,
-        enemys[i].size,
-        "blue"
-      );
+      drawReact(v.x + centralize, v.y + centralize, v.size, "blue");
     }
-  }
+  });
 }
 
 export function drawBullets() {
