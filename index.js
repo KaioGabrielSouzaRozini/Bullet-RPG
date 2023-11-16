@@ -30,8 +30,9 @@ let interval;
 let intervalEnemy;
 
 function drive(key) {
-  switch (key.key) {
-    case "ArrowRight":
+  let lower = key.key.toLowerCase();
+  switch (lower) {
+    case "arrowright":
       if (player.x < 840 && gameD.turn == true) {
         player.x += 60;
         gameD.moves -= 1;
@@ -40,7 +41,7 @@ function drive(key) {
         gameD.moves -= 1;
       }
       break;
-    case "ArrowLeft":
+    case "arrowleft":
       if (player.x > 40 && gameD.turn == true) {
         player.x -= 60;
         gameD.moves -= 1;
@@ -49,7 +50,7 @@ function drive(key) {
         gameD.moves -= 1;
       }
       break;
-    case "ArrowUp":
+    case "arrowup":
       if (player.y > 40 && gameD.turn == true) {
         player.y -= 60;
         gameD.moves -= 1;
@@ -58,7 +59,7 @@ function drive(key) {
         gameD.moves -= 1;
       }
       break;
-    case "ArrowDown":
+    case "arrowdown":
       if (player.y < 540 && gameD.turn == true) {
         player.y += 60;
         gameD.moves -= 1;
