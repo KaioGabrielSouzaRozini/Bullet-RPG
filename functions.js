@@ -107,7 +107,7 @@ export function launch(direction) {
 }
 
 export function enemyTurn() {
-  gameD.moves = 3;
+  gameD.moves = 1;
   for (var i = 0; i < gameD.moves; i++) {
     let monstersMove = Math.round(Math.random());
     if (enemys.length != 0) {
