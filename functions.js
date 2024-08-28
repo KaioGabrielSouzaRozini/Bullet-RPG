@@ -132,7 +132,7 @@ export function enemyTurn() {
       }, 500);
     }
   }
-  let gunProb = Math.round(Math.random() * 7);
+  let gunProb = Math.round(Math.random() * 14);
   if (gunProb == 3) {
     spawnGun("pistol", 6);
   } else if (gunProb == 2) {
