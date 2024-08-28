@@ -126,6 +126,6 @@ function game() {
 
 function gameLoop() {
   interval = setInterval(game, 1000 / 30);
-  intervalEnemy = setInterval(enemyTurn, 500);
+  intervalEnemy = setInterval(enemyTurn, 600);
 }
 gameLoop();
