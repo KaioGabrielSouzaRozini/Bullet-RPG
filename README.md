@@ -13,6 +13,7 @@ Neste jogo você e um bloco vermelho e precisa sobreviver contra inimigos azuis 
 * Boa sorte! 🤠
  </br>
  link: https://bullet-rpg.vercel.app/
+ </br>
 
 
 
