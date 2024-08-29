@@ -11,12 +11,12 @@ Neste jogo você e um bloco vermelho e precisa sobreviver contra inimigos azuis 
 * a cada 10 turnos um Chefe aparece, ele tem 3 vidas assim como você.
 * existem no total 4 armas, pistola(verde), metralhadora(roxo), sniper(rosa) e espingarda(laranja).
 * Boa sorte! 🤠
+ </br>
+ link: https://bullet-rpg.vercel.app/
 
 
 
  <img align="center" alt="Kaio-CSS" height="450" src="https://github.com/KaioGabrielSouzaRozini/Bullet-RPG/assets/110106110/5bb9391e-5803-4672-9deb-79175758cc4e">
 
- </br>
- link: https://bullet-rpg.vercel.app/
 
 
